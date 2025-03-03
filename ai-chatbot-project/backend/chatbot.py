@@ -7,6 +7,8 @@ logger = logging.getLogger(__name__)
 
 def get_chatbot_response(user_message):
     try:
+        logger.info(f"🔹 사용자 메시지: {user_message}")  # ✅ 사용자 입력 로그 추가
+
         client = openai.OpenAI(api_key=OPENAI_API_KEY)
         response = client.chat.completions.create(
             model="gpt-4o",
@@ -17,7 +19,12 @@ def get_chatbot_response(user_message):
             max_tokens=100,
             temperature=0.5
         )
-        return response.choices[0].message.content.strip()
+
+        bot_response = response.choices[0].message.content.strip()
+        logger.info(f"💬 챗봇 응답: {bot_response}")  # ✅ 챗봇 응답 로그 추가
+
+        return bot_response
+
     except Exception as e:
-        logger.error(f"Chatbot Error: {str(e)}")
+        logger.error(f"❌ Chatbot Error: {str(e)}")
         return "서버 오류 발생"

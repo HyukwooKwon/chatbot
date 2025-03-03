@@ -7,7 +7,7 @@ from routes.naver import naver_bp
 from routes.telegram import telegram_bp
 
 # ✅ 로그 설정 추가
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)  # ✅ DEBUG까지 출력 설정
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
@@ -22,8 +22,8 @@ app.register_blueprint(telegram_bp)
 @app.route("/")  # 루트 경로 추가
 def home():
     logger.info("✅ 홈 페이지 요청이 들어옴!")
-    return render_template("index.html")
+    return jsonify({"message": "Flask 서버 정상 작동 중!"})
 
 if __name__ == "__main__":
     logger.info("🚀 Flask 서버 시작됨 (PORT: 5001)")
-    app.run(host="0.0.0.0", port=5001, debug=False)
+    app.run(host="0.0.0.0", port=5000, debug=False)
